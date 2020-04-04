@@ -7,15 +7,20 @@ class Relase extends AbstractProcess
 
     protected function run($arg)
     {
-        while (true)
-        {
+        go(static function () {
+            while (true)
+            {
+                $exec = 'cd ' .EASYSWOOLE_ROOT. '; git pull';
+                $pullResult = exec($exec);
+                var_dump($pullResult);
+                if ($pullResult !== 'Already up to date.') {
 
-            $exec = 'cd ' .EASYSWOOLE_ROOT. '; git pull';
-            $pullResult = exec($exec);
-            var_dump($pullResult);
-            // 每5秒同步一次代码
-            Coroutine::sleep(5);
-        }
+                }
+                // 每5秒同步一次代码
+                Coroutine::sleep(5);
+            }
+        });
+
     }
 
     protected function onPipeReadable(\Swoole\Process $process)
