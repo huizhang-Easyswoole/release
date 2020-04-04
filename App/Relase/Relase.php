@@ -17,7 +17,7 @@ class Relase extends AbstractProcess
 
                 if (trim($pullResult) !== '') {
                     echo '有新版本发布'.PHP_EOL;
-                    $cloneExec = 'git clone origin https://github.com/huizhang-Easyswoole/release.git ../relase-'.date('Y-m-d H:i:s');
+                    $cloneExec = 'git clone https://github.com/huizhang-Easyswoole/release.git ../relase-'.date('Y-m-d H:i:s');
                     $cloneResult = exec($cloneExec);
                     var_dump($cloneResult);
                 } else {
