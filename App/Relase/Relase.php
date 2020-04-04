@@ -12,7 +12,7 @@ class Relase extends AbstractProcess
             {
                 Coroutine::sleep(1);
                 $shellLog = ' 2>> /Users/yuzhao3/sites/shell.log';
-                error_log('开始检测代码是否更新1'.PHP_EOL, 3, '/Users/yuzhao3/sites/es-log.log');
+                error_log('开始检测代码是否更新2'.PHP_EOL, 3, '/Users/yuzhao3/sites/es-log.log');
 
                 $diffExec = 'cd ' .EASYSWOOLE_ROOT. '; git fetch; git diff --stat master origin/master;';
                 $pullResult = exec($diffExec);
