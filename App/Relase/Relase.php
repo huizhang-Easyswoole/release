@@ -27,7 +27,7 @@ class Relase extends AbstractProcess
                     error_log(json_encode([$cloneExec, $res, $a, $b]), 3, '/Users/yuzhao3/sites/es-log.log');
                     error_log('新版本代码clone'.PHP_EOL, 3, '/Users/yuzhao3/sites/es-log.log');
 
-                    $lsofExec = 'lsof -i:9501';
+                    $lsofExec = 'lsof -i:9501 {$shellLog}';
                     $lsofResult = exec($lsofExec);
                     $newPort = 9501;
                     $oldPort = 9502;
@@ -43,7 +43,7 @@ class Relase extends AbstractProcess
                     file_put_contents($newVersionPath.'/dev.php', $devConfig);
 
                     error_log('新服务启动'.PHP_EOL, 3, '/Users/yuzhao3/sites/es-log.log');
-                    $startExec = "cd {$newVersionPath}; php easyswoole start d";
+                    $startExec = "cd {$newVersionPath}; php easyswoole start d {$shellLog}";
                     exec($startExec);
 
                     // 替换nginx配置
@@ -54,11 +54,11 @@ class Relase extends AbstractProcess
                     file_put_contents($ngConfigPath, $ngConfig);
 
                     error_log('重启ng'.PHP_EOL, 3, '/Users/yuzhao3/sites/es-log.log');
-                    $reloadNgExec = 'nginx -s reload';
+                    $reloadNgExec = "nginx -s reload {$shellLog}";
                     exec($reloadNgExec);
 
                     error_log('旧服务停掉'.PHP_EOL, 3, '/Users/yuzhao3/sites/es-log.log');
-                    $stopExec = 'php easyswoole stop';
+                    $stopExec = "php easyswoole stop {$shellLog}";
                     exec($stopExec);
 
                     // 每5秒同步一次代码1
