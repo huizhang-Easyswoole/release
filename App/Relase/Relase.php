@@ -58,7 +58,7 @@ class Relase extends AbstractProcess
                     exec($reloadNgExec);
 
                     error_log('旧服务停掉'.PHP_EOL, 3, '/Users/yuzhao3/sites/es-log.log');
-                    $stopExec = "php easyswoole stop {$shellLog}";
+                    $stopExec = "cd ".EASYSWOOLE_ROOT."; php easyswoole stop {$shellLog}";
                     exec($stopExec);
 
                     // 每5秒同步一次代码1
