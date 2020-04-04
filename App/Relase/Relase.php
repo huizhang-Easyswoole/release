@@ -27,7 +27,7 @@ class Relase extends AbstractProcess
                     error_log(json_encode([$cloneExec, $res, $a, $b]), 3, '/Users/yuzhao3/sites/es-log.log');
                     error_log('新版本代码clone'.PHP_EOL, 3, '/Users/yuzhao3/sites/es-log.log');
 
-                    $lsofExec = 'lsof -i:9501 {$shellLog}';
+                    $lsofExec = "lsof -i:9501 {$shellLog}";
                     $lsofResult = exec($lsofExec);
                     $newPort = 9501;
                     $oldPort = 9502;
