@@ -11,7 +11,7 @@ class Relase extends AbstractProcess
             while (true)
             {
                 Coroutine::sleep(5);
-                error_log('开始检测代码是否更新12'.PHP_EOL, 3, '/Users/yuzhao3/sites/es-log.log');
+                error_log('开始检测代码是否更新123'.PHP_EOL, 3, '/Users/yuzhao3/sites/es-log.log');
 
                 $diffExec = 'cd ' .EASYSWOOLE_ROOT. '; git fetch; git diff --stat master origin/master;';
                 $pullResult = exec($diffExec);
@@ -22,7 +22,7 @@ class Relase extends AbstractProcess
 
                     $cloneExec = "git clone https://github.com/huizhang-Easyswoole/release.git {$newVersionPath};cd {$newVersionPath};composer update;";
                     $res = exec($cloneExec);
-                    error_log(json_encode([$cloneExec, $res]));
+                    error_log(json_encode([$cloneExec, $res]), 3, '/Users/yuzhao3/sites/es-log.log');
                     error_log('新版本代码clone'.PHP_EOL, 3, '/Users/yuzhao3/sites/es-log.log');
 
                     $lsofExec = 'lsof -i:9501';
