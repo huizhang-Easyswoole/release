@@ -25,8 +25,6 @@ class Relase extends AbstractProcess
 
                 }
 
-                var_dump($pullResult);
-
 //                $exec = 'cd ' .EASYSWOOLE_ROOT. '; git pull';
 //                $pullResult = exec($exec);
 //
