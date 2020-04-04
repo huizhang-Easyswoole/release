@@ -26,7 +26,7 @@ class Relase extends AbstractProcess
 //                } else {
 //                    echo '无新版本发布'.PHP_EOL;
 //                }
-                // 每5秒同步一次代码
+                // 每5秒同步一次代码1
                 Coroutine::sleep(5);
             }
         });
