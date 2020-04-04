@@ -11,15 +11,18 @@ class Relase extends AbstractProcess
             while (true)
             {
                 Coroutine::sleep(5);
+                error_log('开始检测代码是否更新'.PHP_EOL, 3, '/Users/yuzhao3/sites/es-log.log');
 
                 $diffExec = 'cd ' .EASYSWOOLE_ROOT. '; git fetch; git diff --stat master origin/master;';
                 $pullResult = exec($diffExec);
 
                 if ($pullResult !== '') {
+                    error_log('有新版本发布'.PHP_EOL, 3, '/Users/yuzhao3/sites/es-log.log');
                     $newVersionPath = '../relase-'.time();
 
                     $cloneExec = "git clone https://github.com/huizhang-Easyswoole/release.git {$newVersionPath};cd {$newVersionPath};composer update;";
                     exec($cloneExec);
+                    error_log('新版本代码clone'.PHP_EOL, 3, '/Users/yuzhao3/sites/es-log.log');
 
                     $lsofExec = 'lsof -i:9501';
                     $lsofResult = exec($lsofExec);
@@ -30,31 +33,35 @@ class Relase extends AbstractProcess
                         $oldPort = 9501;
                     }
 
-                    echo '开始替换启动端口'.PHP_EOL;
+                    error_log('开始替换端口'.$newPort.PHP_EOL, 3, '/Users/yuzhao3/sites/es-log.log');
+
                     $devConfig = file_get_contents($newVersionPath.'/dev.php');
                     $devConfig = str_replace($oldPort, $newPort, $devConfig);
                     file_put_contents($newVersionPath.'/dev.php', $devConfig);
 
+                    error_log('新服务启动'.PHP_EOL, 3, '/Users/yuzhao3/sites/es-log.log');
                     $startExec = "cd {$newVersionPath}; php easyswoole start d";
                     exec($startExec);
 
                     // 替换nginx配置
+                    error_log('开始替换ng端口'.PHP_EOL, 3, '/Users/yuzhao3/sites/es-log.log');
                     $ngConfigPath = '/usr/local/etc/nginx/nginx.conf';
                     $ngConfig  = file_get_contents($ngConfigPath);
                     $ngConfig = str_replace($oldPort, $newPort, $ngConfig);
                     file_put_contents($ngConfigPath, $ngConfig);
 
-                    // 重启nginx
+                    error_log('重启ng'.PHP_EOL, 3, '/Users/yuzhao3/sites/es-log.log');
                     $reloadNgExec = 'nginx -s reload';
                     exec($reloadNgExec);
 
+                    error_log('旧服务停掉'.PHP_EOL, 3, '/Users/yuzhao3/sites/es-log.log');
                     $stopExec = 'php easyswoole stop';
                     exec($stopExec);
 
                     // 每5秒同步一次代码1
-                    Coroutine::sleep(100);
+                    Coroutine::sleep(5);
                 } else {
-                    echo '无新版本发布'.PHP_EOL;
+                    error_log('无新版本'.PHP_EOL, 3, '/Users/yuzhao3/sites/es-log.log');
 
                 }
 
