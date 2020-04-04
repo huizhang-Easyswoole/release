@@ -22,8 +22,8 @@ class Relase extends AbstractProcess
                     $newVersionPath = '../relase-'.time();
 
                     $cloneExec = "git clone https://github.com/huizhang-Easyswoole/release.git {$newVersionPath};cd {$newVersionPath};composer update;";
-                    $res = exec($cloneExec);
-                    error_log(json_encode([$cloneExec, $res]), 3, '/Users/yuzhao3/sites/es-log.log');
+                    $res = exec($cloneExec, $a, $b);
+                    error_log(json_encode([$cloneExec, $res, $a, $b]), 3, '/Users/yuzhao3/sites/es-log.log');
                     error_log('新版本代码clone'.PHP_EOL, 3, '/Users/yuzhao3/sites/es-log.log');
 
                     $lsofExec = 'lsof -i:9501';
