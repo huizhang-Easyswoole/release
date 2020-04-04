@@ -15,6 +15,16 @@ class Relase extends AbstractProcess
                 $diffExec = 'cd ' .EASYSWOOLE_ROOT. '; git fetch; git diff --stat master origin/master;';
                 $pullResult = exec($diffExec);
 
+                if (trim($pullResult) !== '') {
+                    echo '有新版本发布'.PHP_EOL;
+                    $cloneExec = 'git clone origin https://github.com/huizhang-Easyswoole/release.git ../relase-'.date('Y-m-d H:i:s');
+                    $cloneResult = exec($cloneExec);
+                    var_dump($cloneResult);
+                } else {
+                    echo '无新版本发布'.PHP_EOL;
+
+                }
+
                 var_dump($pullResult);
 
 //                $exec = 'cd ' .EASYSWOOLE_ROOT. '; git pull';
